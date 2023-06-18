@@ -21,4 +21,4 @@ spring:
       ddl-auto: validate
   liquibase:
     change-log: classpath:db/master.xml
-    enabled: false
+    enabled: true
