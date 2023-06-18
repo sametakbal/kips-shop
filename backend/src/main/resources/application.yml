@@ -22,3 +22,9 @@ spring:
   liquibase:
     change-log: classpath:db/master.xml
     enabled: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 2000KB
+      max-request-size: 2000KB
