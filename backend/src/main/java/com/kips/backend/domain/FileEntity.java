@@ -6,12 +6,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Entity
-@Table(name = "file")
+@MappedSuperclass
 public class FileEntity {
 
     private static final long serialVersionUID = 1905122041950251207L;

@@ -1,8 +1,11 @@
 package com.kips.backend.service.impl;
 
 import com.kips.backend.common.exception.GeneralException;
+import com.kips.backend.domain.EntityType;
 import com.kips.backend.domain.FileEntity;
-import com.kips.backend.repository.FileRepository;
+import com.kips.backend.domain.Product;
+import com.kips.backend.domain.ProductImage;
+import com.kips.backend.repository.ProductImageRepository;
 import com.kips.backend.service.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -26,40 +29,51 @@ public class FileServiceImpl implements FileService {
 
     public static final String UPLOAD_DIR = "./uploads/";
 
-    private final FileRepository repository;
+    private final ProductImageRepository productImageRepository;
 
     @Override
-    public void uploadFile(MultipartFile file, Integer entityId) {
+    public void uploadFile(MultipartFile file, Integer entityId, EntityType entityType) {
 
         if (file.isEmpty()) {
             throw new GeneralException("File not found");
         }
         String extension = getExtensionByStringHandling(file.getOriginalFilename());
-        String uploadDir = UPLOAD_DIR + entityId + "/";
-        String fullFilename = String.format("%s.%s", UUID.randomUUID(), extension);
-        String filePath = uploadDir + fullFilename;
+        String uploadDir = UPLOAD_DIR + entityType.name().toLowerCase() + "/";
+
         try {
             if (new File(uploadDir).exists() || (new File(uploadDir).mkdir())) {
-                Path path = Paths.get(filePath);
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                FileEntity fileEntity = FileEntity.builder()
-                        .name(fullFilename)
-                        .path(filePath)
-                        .type(file.getContentType())
-                        .createdAt(LocalDateTime.now())
-                        .updatedAt(LocalDateTime.now())
-                        .build();
-                repository.save(fileEntity);
+                uploadDir += entityId + "/";
+                if (new File(uploadDir).exists() || (new File(uploadDir).mkdir())) {
+                    String fullFilename = String.format("%s.%s", UUID.randomUUID(), extension);
+                    String filePath = uploadDir + fullFilename;
+                    Path path = Paths.get(filePath);
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+                    if (entityType == EntityType.PRODUCT) {
+                        ProductImage productImage = ProductImage.builder()
+                                .name(fullFilename)
+                                .path(filePath)
+                                .type(file.getContentType())
+                                .createdAt(LocalDateTime.now())
+                                .updatedAt(LocalDateTime.now())
+                                .product(Product.builder().id(entityId).build())
+                                .build();
+
+                        productImageRepository.save(productImage);
+                    }
+                }
+
             }
         } catch (IOException e) {
             throw new GeneralException(e.getMessage());
         }
     }
 
+
     @Override
     public Resource loadFileAsResource(String fileName) {
         try {
-            FileEntity fileEntity = repository.findByName(fileName).orElseThrow(() -> new GeneralException("File not found"));
+            FileEntity fileEntity = productImageRepository.findByName(fileName).orElseThrow(() -> new GeneralException("File not found"));
             Path fileStorageLocation = Paths.get(fileEntity.getPath())
                     .toAbsolutePath().normalize();
             Resource resource = new UrlResource(fileStorageLocation.toUri());
