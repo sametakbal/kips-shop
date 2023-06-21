@@ -2,7 +2,6 @@ package com.kips.backend.service.impl;
 
 import com.kips.backend.common.exception.GeneralException;
 import com.kips.backend.domain.EntityType;
-import com.kips.backend.domain.FileEntity;
 import com.kips.backend.domain.Product;
 import com.kips.backend.domain.ProductImage;
 import com.kips.backend.repository.ProductImageRepository;
@@ -28,6 +27,7 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     public static final String UPLOAD_DIR = "./uploads/";
+    public static final String FILE_NOT_FOUND = "File not found";
 
     private final ProductImageRepository productImageRepository;
 
@@ -35,7 +35,7 @@ public class FileServiceImpl implements FileService {
     public void uploadFile(MultipartFile file, Integer entityId, EntityType entityType) {
 
         if (file.isEmpty()) {
-            throw new GeneralException("File not found");
+            throw new GeneralException(FILE_NOT_FOUND);
         }
         String extension = getExtensionByStringHandling(file.getOriginalFilename());
         String uploadDir = UPLOAD_DIR + entityType.name().toLowerCase() + "/";
@@ -71,10 +71,10 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public Resource loadFileAsResource(String fileName) {
+    public Resource loadFileAsResource(String fileName, EntityType entityType) {
         try {
-            FileEntity fileEntity = productImageRepository.findByName(fileName).orElseThrow(() -> new GeneralException("File not found"));
-            Path fileStorageLocation = Paths.get(fileEntity.getPath())
+            ProductImage productImage = productImageRepository.findByName(fileName).orElseThrow(() -> new GeneralException(FILE_NOT_FOUND));
+            Path fileStorageLocation = Paths.get(productImage.getPath())
                     .toAbsolutePath().normalize();
             Resource resource = new UrlResource(fileStorageLocation.toUri());
             if (resource.exists()) {
@@ -85,6 +85,24 @@ public class FileServiceImpl implements FileService {
         } catch (Exception ex) {
             throw new GeneralException(ex.getMessage());
         }
+    }
+
+    @Override
+    public void deleteFileWithFileName(String fileName, EntityType entityType) {
+        ProductImage fileEntity = productImageRepository.findByName(fileName)
+                .orElseThrow(() -> new GeneralException(FILE_NOT_FOUND));
+
+        Path fileStorageLocation = Paths.get(fileEntity.getPath())
+                .toAbsolutePath().normalize();
+
+        File file = new File(fileStorageLocation.toString());
+
+        if (!file.exists()) {
+            throw new GeneralException("File not deleted ");
+        }
+
+        file.delete();
+        productImageRepository.delete(fileEntity);
     }
 
     private String getExtensionByStringHandling(String filename) {

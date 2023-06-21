@@ -6,5 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
     void uploadFile(MultipartFile file, Integer entityId, EntityType entityType);
-    Resource loadFileAsResource(String fileName);
+    Resource loadFileAsResource(String fileName, EntityType entityType);
+    void deleteFileWithFileName(String fileName, EntityType entityType);
 }
