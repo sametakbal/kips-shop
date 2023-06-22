@@ -1,6 +1,7 @@
 package com.kips.backend.service.impl;
 
 import com.kips.backend.common.exception.GeneralException;
+import com.kips.backend.common.util.ValidationUtil;
 import com.kips.backend.domain.EntityType;
 import com.kips.backend.domain.Product;
 import com.kips.backend.repository.ProductRepository;
@@ -12,6 +13,7 @@ import com.kips.backend.service.mapper.ProductMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +26,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(ProductCreateDto dto) {
+
+        ValidationUtil.fieldCheckNullOrEmpty(dto.getName(), "name");
+        ValidationUtil.fieldCheckNullOrEmpty(dto.getDescription(), "description");
+        ValidationUtil.fieldCheckNullOrEmpty(dto.getCountInStock(), "countInStock");
+        ValidationUtil.fieldCheckNullOrEmpty(dto.getPrice(), "price");
+        ValidationUtil.fieldCheckNullOrEmpty(dto.getBrandId(), "brandId");
+
         Product entity = productMapper.toEntity(dto);
         Product saved = productRepository.save(entity);
         dto.getPhotoFiles().forEach(file -> fileService.uploadFile(file, saved.getId(), EntityType.PRODUCT));
@@ -37,5 +46,11 @@ public class ProductServiceImpl implements ProductService {
             return productMapper.toDto(product);
         }
         throw new GeneralException("Product not found");
+    }
+
+    @Override
+    public List<ProductDto> getProducts() {
+        List<Product> products = productRepository.findAll();
+        return productMapper.toDtoList(products);
     }
 }

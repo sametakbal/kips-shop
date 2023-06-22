@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "proxy":"http://localhost:8080",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -10,6 +11,7 @@
     "@types/node": "^16.18.36",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
+    "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",

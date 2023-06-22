@@ -1,7 +1,7 @@
 package com.kips.backend.service.impl;
 
 import com.kips.backend.common.exception.GeneralException;
-import com.kips.backend.common.util.StringUtil;
+import com.kips.backend.common.util.ValidationUtil;
 import com.kips.backend.domain.Category;
 import com.kips.backend.repository.CategoryRepository;
 import com.kips.backend.service.CategoryService;
@@ -41,8 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void create(CategoryDto categoryDto) {
-        StringUtil.fieldCheckNullOrEmpty(categoryDto.getName(),"Name");
-        StringUtil.fieldCheckNullOrEmpty(categoryDto.getSlug(),"Slug");
+        ValidationUtil.fieldCheckNullOrEmpty(categoryDto.getName(),"Name");
+        ValidationUtil.fieldCheckNullOrEmpty(categoryDto.getSlug(),"Slug");
         Category category = mapper.toEntity(categoryDto);
         repository.save(category);
 

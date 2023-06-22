@@ -36,7 +36,7 @@ public class ProductMapper {
                 .countInStock(product.getCountInStock())
                 .numReviews(product.getNumReviews())
                 .rating(product.getRating())
-                .photos(photos)
+                .images(photos)
                 .build();
     }
 
@@ -70,5 +70,9 @@ public class ProductMapper {
                 .numReviews(productDto.getNumReviews())
                 .rating(productDto.getRating())
                 .build();
+    }
+
+    public List<ProductDto> toDtoList(List<Product> products) {
+        return products.stream().map(this::toDto).toList();
     }
 }

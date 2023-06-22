@@ -12,11 +12,11 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     return (
         <>
             <Card className='my-3 p-3 rounded'>
-                <Link to={`/product/${product._id}`} >
-                    <Card.Img src={product.image} variant='top' />
+                <Link to={`/product/${product.id}`} >
+                    <Card.Img src={product.images[0]} variant='top' />
                 </Link>
                 <Card.Body>
-                    <a href={`/product/${product._id}`} >
+                    <a href={`/product/${product.id}`} >
                         <Card.Title as='div' className='product-title'>
                             <strong>{product.name}</strong>
                         </Card.Title>

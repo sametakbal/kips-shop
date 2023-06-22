@@ -1,7 +1,7 @@
 export interface ProductType {
-  _id: string;
+  id: string;
   name: string;
-  image: string;
+  images: Array<string> | [];
   description: string;
   brand: string;
   category: string;

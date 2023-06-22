@@ -23,5 +23,5 @@ public class ProductDto {
     private Integer countInStock;
     private Float rating;
     private Integer numReviews;
-    private List<String> photos;
+    private List<String> images;
 }

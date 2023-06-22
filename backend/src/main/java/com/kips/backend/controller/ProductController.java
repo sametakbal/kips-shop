@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/products")
 @AllArgsConstructor
@@ -24,5 +26,10 @@ public class ProductController {
     @GetMapping({"/{id}"})
     public ResponseEntity<ProductDto> getProduct(@PathVariable Integer id) {
         return ResponseEntity.ok(productService.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductDto>> getProducts() {
+        return ResponseEntity.ok(productService.getProducts());
     }
 }
