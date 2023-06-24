@@ -37,3 +37,5 @@ INSERT INTO product (id,name,description,brand_id,category_id,price,count_in_sto
 INSERT INTO product (id,name,description,brand_id,category_id,price,count_in_stock,rating,num_reviews) VALUES (4,'Sony Playstation 4 Pro White Version','The ultimate home entertainment center starts with PlayStation. Whether you are into gaming, HD movies, television, music',3,1,399.99,11,5,12);
 INSERT INTO product (id,name,description,brand_id,category_id,price,count_in_stock,rating,num_reviews) VALUES (5,'Logitech G-Series Gaming Mouse','Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience',4,1,49.99,7,3.5,10);
 INSERT INTO product (id,name,description,brand_id,category_id,price,count_in_stock,rating,num_reviews) VALUES (6,'Amazon Echo Dot 3rd Generation','Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space',5,1,29.99,0,4,12);
+
+SELECT setval('product_id_seq', (SELECT MAX(id) FROM product));
