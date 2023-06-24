@@ -74,8 +74,7 @@ public class FileServiceImpl implements FileService {
     public Resource loadFileAsResource(String fileName, EntityType entityType) {
         try {
             ProductImage productImage = productImageRepository.findByName(fileName).orElseThrow(() -> new GeneralException(FILE_NOT_FOUND));
-            Path fileStorageLocation = Paths.get(productImage.getPath())
-                    .toAbsolutePath().normalize();
+            Path fileStorageLocation = getPath(productImage.getPath());
             Resource resource = new UrlResource(fileStorageLocation.toUri());
             if (resource.exists()) {
                 return resource;
@@ -92,22 +91,37 @@ public class FileServiceImpl implements FileService {
         ProductImage fileEntity = productImageRepository.findByName(fileName)
                 .orElseThrow(() -> new GeneralException(FILE_NOT_FOUND));
 
-        Path fileStorageLocation = Paths.get(fileEntity.getPath())
-                .toAbsolutePath().normalize();
+        Path fileStorageLocation = getPath(fileEntity.getPath());
 
-        File file = new File(fileStorageLocation.toString());
-
-        if (!file.exists()) {
-            throw new GeneralException("File not deleted ");
+        try {
+            Files.delete(fileStorageLocation);
+            productImageRepository.delete(fileEntity);
+        } catch (IOException e) {
+            throw new GeneralException(e.getMessage());
         }
 
-        file.delete();
-        productImageRepository.delete(fileEntity);
+    }
+
+    @Override
+    public void deleteProductImage(ProductImage productImage) {
+
+        Path fileStorageLocation = getPath(productImage.getPath());
+        try {
+            Files.delete(fileStorageLocation);
+            productImageRepository.delete(productImage);
+        } catch (IOException e) {
+            throw new GeneralException(e.getMessage());
+        }
     }
 
     private String getExtensionByStringHandling(String filename) {
         return Optional.ofNullable(filename)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1)).orElseThrow();
+    }
+
+    private Path getPath(String path) {
+        return Paths.get(path)
+                .toAbsolutePath().normalize();
     }
 }

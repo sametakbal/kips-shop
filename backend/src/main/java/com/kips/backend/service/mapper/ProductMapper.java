@@ -4,9 +4,10 @@ package com.kips.backend.service.mapper;
 import com.kips.backend.domain.Brand;
 import com.kips.backend.domain.Category;
 import com.kips.backend.domain.Product;
-import com.kips.backend.service.dto.ProductCreateDto;
+import com.kips.backend.service.request.ProductRequest;
 import com.kips.backend.service.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public Product toEntity(ProductCreateDto productDto) {
+    public Product toEntity(ProductRequest productDto) {
         if (productDto == null) {
             return null;
         }
@@ -74,5 +75,10 @@ public class ProductMapper {
 
     public List<ProductDto> toDtoList(List<Product> products) {
         return products.stream().map(this::toDto).toList();
+    }
+
+
+    public Page<ProductDto> toDtoPage(Page<Product> productDtoPage){
+        return productDtoPage.map(this::toDto);
     }
 }
