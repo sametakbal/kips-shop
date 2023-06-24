@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS product_images(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) UNIQUE NOT NULL,
     type VARCHAR(255) NOT NULL,
     path VARCHAR(255) NOT NULL,
     product_id INT NOT NULL,
