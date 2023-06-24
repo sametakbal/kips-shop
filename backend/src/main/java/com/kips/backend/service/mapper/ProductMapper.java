@@ -57,7 +57,7 @@ public class ProductMapper {
                 .rating(productDto.getRating())
                 .build();
     }
-
+/**
     public Product toEntity(ProductDto productDto) {
         if (productDto == null) {
             return null;
@@ -71,7 +71,7 @@ public class ProductMapper {
                 .numReviews(productDto.getNumReviews())
                 .rating(productDto.getRating())
                 .build();
-    }
+    } */
 
     public List<ProductDto> toDtoList(List<Product> products) {
         return products.stream().map(this::toDto).toList();
