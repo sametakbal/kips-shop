@@ -22,6 +22,7 @@ public class ProductController {
 
     private final ProductService service;
 
+
     @GetMapping
     public ResponseEntity<Page<ProductDto>> fetchProductPage(@RequestParam(defaultValue = "0") Integer page,
                                                              @RequestParam(defaultValue = "10") Integer pageSize,

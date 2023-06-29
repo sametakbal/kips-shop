@@ -1,4 +1,4 @@
-package com.kips.backend.common.config;
+package com.kips.backend.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;

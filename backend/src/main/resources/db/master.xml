@@ -6,5 +6,6 @@
     <include file="/db/changelog/00001_category_table_create.sql" relativeToChangelogFile="false"/>
     <include file="/db/changelog/00002_product_and_brand_table_create.sql" relativeToChangelogFile="false"/>
     <include file="/db/changelog/00003_file_table_create.sql" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/00004_app_user_tables_create.sql" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
