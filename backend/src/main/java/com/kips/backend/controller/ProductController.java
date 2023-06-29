@@ -3,6 +3,7 @@ package com.kips.backend.controller;
 import com.kips.backend.service.ProductService;
 import com.kips.backend.service.request.ProductRequest;
 import com.kips.backend.service.dto.ProductDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 @AllArgsConstructor
+@Tag(name = "Product Controller")
 public class ProductController {
 
     private final ProductService service;

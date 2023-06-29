@@ -3,6 +3,9 @@ package com.kips.backend.controller;
 import com.kips.backend.common.exception.GeneralException;
 import com.kips.backend.domain.EntityType;
 import com.kips.backend.service.FileService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -16,10 +19,27 @@ import java.io.IOException;
 @RestController
 @RequestMapping("api/file")
 @AllArgsConstructor
+@Tag(name = "File Controller")
 public class FileController {
 
     private final FileService fileService;
 
+
+    @Operation(
+            description = "Description for file download endpoint",
+            summary = "This is a summary for management get endpoint",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+
+    )
     @GetMapping("/download/product/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileService.loadFileAsResource(fileName, EntityType.PRODUCT);
