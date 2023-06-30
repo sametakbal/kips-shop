@@ -11,11 +11,13 @@ import Loader from './components/Loader';
 
 const HomeScreen = React.lazy(() => import('./screens/HomeScreen'));
 const ProductScreen = React.lazy(() => import('./screens/ProductScreen'));
+const CartScreen = React.lazy(() => import('./screens/CartScreen'));
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<App />} >
     <Route index={true} path="/" element={<Suspense fallback={<Loader />}><HomeScreen /></Suspense>} />
     <Route path="/product/:id" element={<Suspense fallback={<Loader />}><ProductScreen /></Suspense>} />
+    <Route path="/cart" element={<Suspense fallback={<Loader />}><CartScreen /></Suspense>} />
   </Route>
 ));
 
