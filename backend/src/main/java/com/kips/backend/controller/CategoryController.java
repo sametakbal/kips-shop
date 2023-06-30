@@ -4,6 +4,7 @@ package com.kips.backend.controller;
 import com.kips.backend.service.CategoryService;
 import com.kips.backend.service.dto.CategoryDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,20 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
+@AllArgsConstructor
 @Tag(name = "Category Controller")
 public class CategoryController {
 
     private final CategoryService service;
-
-    public CategoryController(CategoryService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public ResponseEntity<Void> create(@RequestBody CategoryDto categoryDto){
-        service.create(categoryDto);
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping
     public ResponseEntity<List<CategoryDto>> fetchCategories(){
@@ -35,4 +27,5 @@ public class CategoryController {
         CategoryDto dto = service.getById(id);
         return ResponseEntity.ok(dto);
     }
+
 }

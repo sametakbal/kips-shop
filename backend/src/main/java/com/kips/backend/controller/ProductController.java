@@ -30,23 +30,13 @@ public class ProductController {
         return ResponseEntity.ok(service.getProductPage(PageRequest.of(page, pageSize, Sort.by(sortBy))));
     }
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> saveProduct(ProductRequest dto) {
-        service.save(dto);
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping({"/{id}"})
     public ResponseEntity<ProductDto> getProduct(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
-    @DeleteMapping({"/{id}"})
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
-        service.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
+
 
     @GetMapping("/all")
     public ResponseEntity<List<ProductDto>> getProducts() {
