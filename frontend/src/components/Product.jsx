@@ -1,14 +1,10 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-import { ProductType } from '../types/ProductType'
 import { Link } from 'react-router-dom'
 import Rating from './Rating'
-interface ProductProps {
-    product: ProductType
-}
 
 
-const Product: React.FC<ProductProps> = ({ product }) => {
+const Product = ({ product }) => {
     return (
         <>
             <Card className='my-3 p-3 rounded'>

@@ -3,12 +3,11 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import { ProductType } from '../types/ProductType';
 import Carousel from 'react-bootstrap/Carousel';
 
 const ProductScreen = () => {
-    const { id } = useParams<{ id: string }>();
-    const [product, setProduct] = useState<ProductType>();
+    const { id } = useParams();
+    const [product, setProduct] = useState();
 
     useEffect(() => {
         const fetchProduct = async () => {
