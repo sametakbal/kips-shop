@@ -7,20 +7,28 @@ import { useGetProductDetailsQuery } from '../slices/productsApiSlice';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { addToCart } from '../slices/cartSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveToFavorites, checkFavorite } from '../slices/favoritesSlice';
+import { MdFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 
 const ProductScreen = () => {
     const { id } = useParams();
     const { data: product = {}, isLoading, error } = useGetProductDetailsQuery(id);
     const [qty, setQty] = useState(1);
+    const isFavorite = useSelector(state => state.favorites.favoriteProducts?.find(i => i.id === Number(id)));
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const addToCartHandler = () => {
+    const addToCartHandler = async () => {
         dispatch(addToCart({ ...product, qty }));
         navigate('/cart');
     }
+
+    const addToFavoritesHandler = async () => {
+        dispatch(saveToFavorites({ ...product }));
+    }
+
 
     return (
         <>
@@ -94,6 +102,10 @@ const ProductScreen = () => {
                                 <ListGroup.Item>
                                     <Button className="btn-block" type="button" disabled={product.countInStock === 0} onClick={addToCartHandler}>
                                         Add to Cart
+                                    </Button>
+                                    {' '}
+                                    <Button className="btn-block" variant='danger' type="button" onClick={addToFavoritesHandler}>
+                                        {isFavorite ? (<MdFavorite style={{ color: 'white' }} />) : (<MdOutlineFavoriteBorder style={{ color: 'white' }} />)}
                                     </Button>
                                 </ListGroup.Item>
                             </ListGroup>

@@ -17,7 +17,7 @@ const favoritesSlice = createSlice({
                 state.favoriteProducts = [...state.favoriteProducts, product];
             }
             localStorage.setItem('favorites', JSON.stringify(state));
-        },
+        }
     }
 });
 

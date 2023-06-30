@@ -1,6 +1,7 @@
 import React from 'react'
 import { Badge, Container, Nav, Navbar } from 'react-bootstrap'
 import { FaShoppingCart, FaUser } from 'react-icons/fa'
+import { MdFavorite } from 'react-icons/md'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useSelector } from 'react-redux'
 import logo from '../assets/logo.png'
@@ -22,6 +23,10 @@ const Header = () => {
                                     {cartItems.length > 0 && (
                                         <Badge pill bg='success' style={{ marginLeft: '5px' }}>{cartItems.reduce((a, c) => a + c.qty, 0)}</Badge>
                                     )}
+                                </Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to='/favorites'>
+                                <Nav.Link ><MdFavorite /> My Favorites
                                 </Nav.Link>
                             </LinkContainer>
                             <LinkContainer to='/login'>
