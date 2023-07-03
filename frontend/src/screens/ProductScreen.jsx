@@ -8,8 +8,9 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { addToCart } from '../slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveToFavorites, checkFavorite } from '../slices/favoritesSlice';
+import { saveToFavorites } from '../slices/favoritesSlice';
 import { MdFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
+import { toast } from "react-toastify";
 
 const ProductScreen = () => {
     const { id } = useParams();
@@ -22,11 +23,13 @@ const ProductScreen = () => {
 
     const addToCartHandler = async () => {
         dispatch(addToCart({ ...product, qty }));
-        navigate('/cart');
+        toast.info('Added to cart');
+        //navigate('/cart');
     }
 
     const addToFavoritesHandler = async () => {
         dispatch(saveToFavorites({ ...product }));
+        toast.success('Added to favorites');
     }
 
 

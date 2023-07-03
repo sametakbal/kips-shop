@@ -1,15 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormContainer from '../components/FormContainer';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../slices/usersApiSlice';
+import { setCredentials } from '../slices/authSlice';
+import Loader from '../components/Loader';
+import { toast } from "react-toastify";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const submitHandler = (e) => {
-        e.preventDefault()
-        console.log('submit')
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [login, { isLoading }] = useLoginMutation();
+
+    const { userInfo } = useSelector(state => state.auth);
+
+    const { search } = useLocation();
+    const sp = new URLSearchParams(search);
+    const redirect = sp.get('redirect') || '/';
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate(redirect);
+        }
+    }, [redirect, navigate, userInfo]);
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await login({ email, password }).unwrap();
+            dispatch(setCredentials({ ...res }));
+            toast.success('Login successful');
+            navigate(redirect);
+        } catch (error) {
+            toast.error(error.data?.errorMessage || error.error);
+        }
     }
 
     return (
@@ -34,9 +63,10 @@ const LoginScreen = () => {
                         onChange={(e) => setPassword(e.target.value)}>
                     </Form.Control>
                 </Form.Group>
-                <Button type='submit' variant='primary'>
+                <Button type='submit' variant='primary' disabled={isLoading}>
                     Sign In
                 </Button>
+                {isLoading && <Loader />}
             </Form>
             <Row className='py-3'>
                 <Col>
