@@ -37,12 +37,8 @@ public class User implements UserDetails, Serializable {
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
-    private String username;
-
     @Column(nullable = false)
     private String password;
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "urole")

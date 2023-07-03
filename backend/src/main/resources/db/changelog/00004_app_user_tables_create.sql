@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS app_user
     id         serial,
     first_name varchar(255) not null,
     last_name  varchar(255) not null,
-    username   varchar(255) not null unique,
     email      varchar(255) not null unique,
     password   varchar(255) not null unique,
     urole      varchar(16),

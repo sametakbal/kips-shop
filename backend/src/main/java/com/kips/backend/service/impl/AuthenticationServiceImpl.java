@@ -21,7 +21,6 @@ import com.kips.backend.service.response.AuthenticationResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -62,14 +61,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
 
         ValidationUtil.fieldCheckNullOrEmpty(request.getEmail(), "Email");
-        ValidationUtil.fieldCheckNullOrEmpty(request.getUsername(), "Username");
 
         if (repository.existsByEmail(request.getEmail())) {
             throw new GeneralException("This Email already in use");
-        }
-
-        if (repository.existsByUsername(request.getUsername())) {
-            throw new GeneralException("This Username already in use");
         }
 
         if (request.getRole() == null) {
@@ -80,7 +74,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .username(StringUtils.lowerCase(request.getUsername()))
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .enabled(false)
@@ -96,6 +89,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .isEnabled(savedUser.isEnabled())
                 .build();
     }
 
@@ -199,7 +193,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Boolean enableUser(ConfirmationTokenRequest request) {
-        Optional<User> userOptional = repository.findByUsername(request.getUsername());
+        Optional<User> userOptional = repository.findByEmail(request.getEmail());
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
