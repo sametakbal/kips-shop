@@ -1,5 +1,6 @@
 package com.kips.backend.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -29,14 +31,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable);
-        http
-                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
-                        .configure(http));
-        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors().and()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/api/auth/**",
+                        SecurityUrlConstants.AUTH_URL,
                         "/v2/api-docs",
                         "/v3/api-docs",
                         "/v3/api-docs/**",
@@ -47,11 +46,16 @@ public class SecurityConfiguration {
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html",
-                        "/api/file/download/**",
+                        "/api/categories/**",
                         "/api/products/**",
-                        "/api/categories/**"
+                        "/api/file/download/**"
                 )
                 .permitAll()
+                .requestMatchers(SecurityUrlConstants.USERS_URL).hasAnyRole(ADMIN.name(), MANAGER.name())
+                .requestMatchers(GET, SecurityUrlConstants.USERS_URL).hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
+                .requestMatchers(POST, SecurityUrlConstants.USERS_URL).hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
+                .requestMatchers(PUT, SecurityUrlConstants.USERS_URL).hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
+                .requestMatchers(DELETE, SecurityUrlConstants.USERS_URL).hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -61,8 +65,17 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl("/api/v1/auth/logout");
+                .logoutUrl("/api/v1/auth/logout")
+        .addLogoutHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
 
         return http.build();
     }
+}
+
+class SecurityUrlConstants {
+    private SecurityUrlConstants() {
+    }
+
+    public static final String AUTH_URL = "/api/auth/**";
+    public static final String USERS_URL = "/api/users/**";
 }
