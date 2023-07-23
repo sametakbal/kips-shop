@@ -10,16 +10,20 @@ const authSlice = createSlice({
     reducers: {
         setCredentials: (state, action) => {
             let user = jwt(action.payload.accessToken);
-            state.userInfo = { ...action.payload, name: user.sub };
-            localStorage.setItem("userInfo", JSON.stringify({ ...action.payload, name: user.sub }));
+            state.userInfo = { ...action.payload, email: user.sub };
+            localStorage.setItem("userInfo", JSON.stringify({ ...action.payload, email: user.sub }));
         },
         logout: (state) => {
             state.userInfo = null;
             localStorage.removeItem("userInfo");
+        },
+        setUserInfo: (state, action) => {
+            state.userInfo = { ...action.payload };
+            localStorage.setItem("userInfo", JSON.stringify({ ...action.payload }));
         }
     }
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setUserInfo } = authSlice.actions;
 
 export default authSlice.reducer;

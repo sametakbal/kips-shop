@@ -3,8 +3,8 @@ import FormContainer from '../components/FormContainer';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../slices/usersApiSlice';
-import { setCredentials } from '../slices/authSlice';
+import { useLoginMutation, useWhoAmIMutation } from '../slices/usersApiSlice';
+import { setCredentials, setUserInfo } from '../slices/authSlice';
 import Loader from '../components/Loader';
 import { toast } from "react-toastify";
 
@@ -16,6 +16,7 @@ const LoginScreen = () => {
     const navigate = useNavigate();
 
     const [login, { isLoading }] = useLoginMutation();
+    const [whoAmI] = useWhoAmIMutation();
 
     const { userInfo } = useSelector(state => state.auth);
 
@@ -34,6 +35,8 @@ const LoginScreen = () => {
         try {
             const res = await login({ email, password }).unwrap();
             dispatch(setCredentials({ ...res }));
+            const whoAmIRes = await whoAmI().unwrap();
+            dispatch(setUserInfo({ ...whoAmIRes }));
             toast.success('Login successful');
             navigate(redirect);
         } catch (error) {
