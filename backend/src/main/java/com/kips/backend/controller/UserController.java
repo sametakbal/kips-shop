@@ -7,20 +7,24 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
 @Tag(name = "Users Controller")
-@PreAuthorize("hasAnyRole('ADMIN', 'USER','MANAGER')")
+@PreAuthorize("hasAnyRole('ADMIN','USER','MANAGER')")
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/whoami")
+    @GetMapping("/who-am-i")
     public ResponseEntity<UserDto> whoAmI() {
         return ResponseEntity.ok(userService.whoAmI());
     }
+
+    @PostMapping("/update-profile")
+    public ResponseEntity<UserDto> updateProfile(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(userService.updateProfile(userDto));
+    }
+
 }

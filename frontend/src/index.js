@@ -27,9 +27,9 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/favorites" element={<Suspense fallback={<Loader />}><FavoritesScreen /></Suspense>} />
     <Route path="/login" element={<Suspense fallback={<Loader />}><LoginScreen /></Suspense>} />
     <Route path="/register" element={<Suspense fallback={<Loader />}><RegisterScreen /></Suspense>} />
-    <Route path="/account" element={<Suspense fallback={<Loader />}><AccountScreen /></Suspense>} />
     <Route path="" element={<Suspense fallback={<Loader />}><PrivateRoute /></Suspense>} >
       <Route path="/shipping" element={<Suspense fallback={<Loader />}><ShippingScreen /></Suspense>} />
+      <Route path="/account" element={<Suspense fallback={<Loader />}><AccountScreen /></Suspense>} />
     </Route>
 
   </Route>

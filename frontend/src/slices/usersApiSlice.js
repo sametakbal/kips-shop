@@ -16,9 +16,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             query: (data) => ({ url: '/api/auth/register', method: "POST", body: data }),
         }),
         whoAmI: builder.mutation({
-            query: () => ({ url: '/api/users/whoami', method: "GET", headers: getAuthorizationHeader() }),
+            query: () => ({ url: '/api/users/who-am-i', method: "GET", headers: getAuthorizationHeader() }),
+        }),
+        updateProfile: builder.mutation({
+            query: (data) => ({ url: '/api/users/update-profile', method: "POST", headers: getAuthorizationHeader(), body: data }),
         }),
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useWhoAmIMutation } = usersApiSlice;
+export const { useLoginMutation, useRegisterMutation, useWhoAmIMutation, useUpdateProfileMutation } = usersApiSlice;
