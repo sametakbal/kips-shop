@@ -31,7 +31,6 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="/shipping" element={<Suspense fallback={<Loader />}><ShippingScreen /></Suspense>} />
       <Route path="/account" element={<Suspense fallback={<Loader />}><AccountScreen /></Suspense>} />
     </Route>
-
   </Route>
 ));
 
