@@ -8,6 +8,7 @@ import com.kips.backend.repository.ProductImageRepository;
 import com.kips.backend.repository.ProductRepository;
 import com.kips.backend.service.FileService;
 import com.kips.backend.service.ProductService;
+import com.kips.backend.service.mapper.ReviewMapper;
 import com.kips.backend.service.request.ProductRequest;
 import com.kips.backend.service.dto.ProductDto;
 import com.kips.backend.service.mapper.ProductMapper;
@@ -27,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
     private final FileService fileService;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ReviewMapper reviewMapper;
     private final ProductImageRepository productImageRepository;
 
     @Override
@@ -53,7 +55,9 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
-            return productMapper.toDto(product);
+            ProductDto dto = productMapper.toDto(product);
+            dto.setReviews(reviewMapper.toDtoList(product.getReviews()));
+            return dto;
         }
         throw new GeneralException("Product not found");
     }

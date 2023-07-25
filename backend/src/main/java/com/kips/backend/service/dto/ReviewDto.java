@@ -13,16 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProductDto {
+public class ReviewDto {
     private Integer id;
-    private String name;
-    private String description;
-    private Integer brandId;
-    private Integer categoryId;
-    private Float price;
-    private Integer countInStock;
+    private String comment;
     private Float rating;
-    private Integer numReviews;
+    private String product;
+    private Integer productId;
+    private String user;
+    private Integer userId;
     private List<String> images;
-    private List<ReviewDto> reviews;
 }

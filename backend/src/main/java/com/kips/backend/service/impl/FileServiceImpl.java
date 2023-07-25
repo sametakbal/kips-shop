@@ -1,17 +1,15 @@
 package com.kips.backend.service.impl;
 
 import com.kips.backend.common.exception.GeneralException;
-import com.kips.backend.domain.EntityType;
-import com.kips.backend.domain.Product;
-import com.kips.backend.domain.ProductImage;
+import com.kips.backend.domain.*;
 import com.kips.backend.repository.ProductImageRepository;
+import com.kips.backend.repository.ReviewImageRepository;
 import com.kips.backend.service.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,6 +30,8 @@ public class FileServiceImpl implements FileService {
 
     private final ProductImageRepository productImageRepository;
 
+    private final ReviewImageRepository reviewImageRepository;
+
     @Override
     public void uploadFile(MultipartFile file, Integer entityId, EntityType entityType) {
 
@@ -38,7 +39,7 @@ public class FileServiceImpl implements FileService {
             throw new GeneralException(FILE_NOT_FOUND);
         }
         String extension = getExtensionByStringHandling(file.getOriginalFilename());
-        String uploadDir = UPLOAD_DIR + entityType.name().toLowerCase() + "/";
+        String uploadDir = UPLOAD_DIR + entityType.getType() + "/";
 
         try {
             if (new File(uploadDir).exists() || (new File(uploadDir).mkdir())) {
@@ -60,6 +61,17 @@ public class FileServiceImpl implements FileService {
                                 .build();
 
                         productImageRepository.save(productImage);
+                    } else if (entityType == EntityType.REVIEW) {
+                        ReviewImage reviewImage = ReviewImage.builder()
+                                .name(fullFilename)
+                                .path(filePath)
+                                .type(file.getContentType())
+                                .createdAt(LocalDateTime.now())
+                                .updatedAt(LocalDateTime.now())
+                                .review(Review.builder().id(entityId).build())
+                                .build();
+
+                        reviewImageRepository.save(reviewImage);
                     }
                 }
 
@@ -73,8 +85,20 @@ public class FileServiceImpl implements FileService {
     @Override
     public Resource loadFileAsResource(String fileName, EntityType entityType) {
         try {
-            ProductImage productImage = productImageRepository.findByName(fileName).orElseThrow(() -> new GeneralException(FILE_NOT_FOUND));
-            Path fileStorageLocation = getPath(productImage.getPath());
+            String filePath = "";
+            if (entityType == EntityType.PRODUCT) {
+                filePath = productImageRepository
+                        .findByName(fileName)
+                        .orElseThrow(() -> new GeneralException(FILE_NOT_FOUND))
+                        .getPath();
+            } else if (entityType == EntityType.REVIEW) {
+                filePath = reviewImageRepository
+                        .findByName(fileName)
+                        .orElseThrow(() -> new GeneralException(FILE_NOT_FOUND))
+                        .getPath();
+            }
+
+            Path fileStorageLocation = getPath(filePath);
             Resource resource = new UrlResource(fileStorageLocation.toUri());
             if (resource.exists()) {
                 return resource;
@@ -112,6 +136,22 @@ public class FileServiceImpl implements FileService {
         } catch (IOException e) {
             throw new GeneralException(e.getMessage());
         }
+    }
+
+    @Override
+    public void deleteReviewImage(ReviewImage reviewImage) {
+        Path fileStorageLocation = getPath(reviewImage.getPath());
+        try {
+            Files.delete(fileStorageLocation);
+            reviewImageRepository.delete(reviewImage);
+        } catch (IOException e) {
+            throw new GeneralException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteReviewImages(List<ReviewImage> images) {
+        images.forEach(this::deleteReviewImage);
     }
 
     private String getExtensionByStringHandling(String filename) {

@@ -23,8 +23,8 @@ const ProductScreen = () => {
 
     const addToCartHandler = async () => {
         dispatch(addToCart({ ...product, qty }));
-        toast.info('Added to cart');
-        //navigate('/cart');
+        toast.info('Added to cart', { position: "bottom-right", });
+        navigate('/cart');
     }
 
     const addToFavoritesHandler = async () => {
@@ -32,11 +32,21 @@ const ProductScreen = () => {
         toast.success('Added to favorites');
     }
 
+    function getBody() {
+        if (isLoading) {
+            return <Loader />;
+        }
+        if (error) {
+            return <Message variant={'danger'}>{error?.data?.message || error.error}</Message>;
+        }
 
-    return (
-        <>
-            <Link to="/" className="btn btn-light my-3">Go Back</Link>
-            {isLoading ? (<Loader />) : error ? (<Message variant={'danger'}>{error?.data?.message || error.error}</Message>) : (<>
+        return getProductDetails();
+
+    }
+
+    function getProductDetails() {
+        return (
+            <>
                 <Row>
                     <Col md={5}>
                         <Carousel>
@@ -115,7 +125,14 @@ const ProductScreen = () => {
                         </Card>
                     </Col>
                 </Row>
-            </>)}
+            </>);
+    }
+
+
+    return (
+        <>
+            <Link to="/" className="btn btn-light my-3">Go Back</Link>
+            {getBody()}
         </>
     )
 }

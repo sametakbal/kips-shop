@@ -18,4 +18,11 @@ public class UserMapper {
                 .role(user.getRole())
                 .build();
     }
+
+    public User userFromId(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+        return User.builder().id(userId).build();
+    }
 }

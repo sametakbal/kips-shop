@@ -44,7 +44,10 @@ spring:
       file-size-threshold: 2KB
       max-file-size: 2000KB
       max-request-size: 2000KB
-file-url: http://localhost:8080/api/file/download/product/
+
+file-url:
+  product: http://localhost:8080/api/file/download/product/
+  review: http://localhost:8080/api/file/download/review/
 
 application:
   security:

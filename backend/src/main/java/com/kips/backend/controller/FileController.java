@@ -40,9 +40,9 @@ public class FileController {
             }
 
     )
-    @GetMapping("/download/product/{fileName}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        Resource resource = fileService.loadFileAsResource(fileName, EntityType.PRODUCT);
+    @GetMapping("/download/{entityType}/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String entityType,@PathVariable String fileName, HttpServletRequest request) {
+        Resource resource = fileService.loadFileAsResource(fileName, EntityType.valueOf(entityType.toUpperCase()));
         return getResourceResponse(request, resource);
     }
 
