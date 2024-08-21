@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CategoryQueryService {
     List<CategoryResponse> getCategories();
+    List<CategoryResponse> getAllCategories();
+    List<CategoryResponse> getCategoriesByParent(Long parentId);
 }

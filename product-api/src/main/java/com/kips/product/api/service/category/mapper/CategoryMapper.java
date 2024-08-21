@@ -1,7 +1,7 @@
 package com.kips.product.api.service.category.mapper;
 
 import com.kips.product.api.domain.CategoryEntity;
-import com.kips.product.api.dto.request.CategoryCreateRequest;
+import com.kips.product.api.dto.request.CategoryRequest;
 import com.kips.product.api.dto.response.CategoryResponse;
 import org.springframework.stereotype.Service;
 
@@ -10,30 +10,28 @@ import java.util.List;
 @Service
 public class CategoryMapper {
 
-    public CategoryEntity toEntity(CategoryCreateRequest request) {
-        CategoryEntity entity = new CategoryEntity();
+    public CategoryEntity toEntity(CategoryRequest request, Long parentId) {
+        var entity = new CategoryEntity();
         entity.setName(request.getName());
-        if (request.getParentId() != null) {
-            entity.setParent(new CategoryEntity(request.getParentId()));
-        }
+        entity.setParent(parentId != null ? new CategoryEntity(parentId) : null);
         return entity;
     }
 
-    public CategoryResponse toResponse(CategoryEntity entity) {
+    public CategoryResponse toResponse(CategoryEntity entity, boolean includeChildren) {
         var response = CategoryResponse.builder()
                 .id(entity.getId()).name(entity.getName()).build();
 
-        if (!entity.getChildren().isEmpty()) {
+        if (!entity.getChildren().isEmpty() && includeChildren) {
             response.setChildren(entity.getChildren().stream()
-                    .map(this::toResponse)
+                    .map(child -> toResponse(child, true))
                     .toList());
         }
         return response;
     }
 
-    public List<CategoryResponse> toResponse(List<CategoryEntity> entities) {
+    public List<CategoryResponse> toResponse(List<CategoryEntity> entities, boolean includeChildren) {
         return entities.stream()
-                .map(this::toResponse)
+                .map(entity -> toResponse(entity, includeChildren))
                 .toList();
     }
 }
