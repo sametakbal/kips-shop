@@ -1,4 +1,4 @@
-name: SonarCloud
+name: SonarCloud Analysis
 
 on:
   push:
@@ -11,18 +11,23 @@ on:
       - 'release/*'
 
 jobs:
-  sonarcloud:
+  sonar:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        project:
+          - product-api
+
     steps:
-      - name: Check out the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Cache Gradle packages
@@ -35,21 +40,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Run SonarCloud Analysis
+      - name: Build and analyze project
+        working-directory: ${{ matrix.project }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonarqube \
-          -Dsonar.projectKey=sametakbal_kips-shop \
-          -Dsonar.organization=sametakbaldeveloper \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }}
+        run: ./gradlew build sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
-      - name: Upload test results to GitHub
+      - name: Upload SonarCloud results
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: test-results
-          path: build/test-results/test
+          name: test-results-${{ matrix.project }}
+          path: ${{ matrix.project }}/build/test-results/test
