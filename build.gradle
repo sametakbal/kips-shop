@@ -9,6 +9,7 @@ subprojects {
         properties {
             property "sonar.projectKey", "sametakbal_kips-shop"
             property "sonar.organization", "sametakbaldeveloper"
+            property "sonar.host.url", "https://sonarcloud.io"
         }
     }
 }
