@@ -17,6 +17,6 @@ subprojects {
 sonarqube {
     properties {
         property "sonar.projectName", "product-api"
-        property "sonar.projectKey", "your_root_project_key"
+        property "sonar.projectKey", "sametakbal_kips-shop"
     }
 }
