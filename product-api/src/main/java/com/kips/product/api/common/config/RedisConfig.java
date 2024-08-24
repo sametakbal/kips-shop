@@ -1,4 +1,4 @@
-package com.kips.product.api.config;
+package com.kips.product.api.common.config;
 
 import com.kips.product.api.common.constants.CacheNames;
 import org.springframework.beans.factory.annotation.Value;

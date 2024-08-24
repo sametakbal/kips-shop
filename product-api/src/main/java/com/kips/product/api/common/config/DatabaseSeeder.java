@@ -1,4 +1,4 @@
-package com.kips.product.api.config;
+package com.kips.product.api.common.config;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,8 @@ public class DatabaseSeeder {
 
     @PostConstruct
     public void seedDatabase() {
-        List<String> sqlFiles = List.of("categories-part-1", "categories-part-2", "categories-part-3", "categories-part-4", "brands", "products");
+        List<String> sqlFiles = List.of("categories-part-1", "categories-part-2", "categories-part-3",
+                "categories-part-4", "brands", "products","product_attributes");
         sqlFiles.forEach(this::executeSql);
     }
 
