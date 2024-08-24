@@ -3,6 +3,7 @@ package com.kips.product.api.common.config;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,11 +22,16 @@ public class DatabaseSeeder {
 
     private final ResourceLoader resourceLoader;
 
+    @Value("${data.seed.enabled:false}")
+    private boolean isSeeded;
+
     @PostConstruct
     public void seedDatabase() {
-        List<String> sqlFiles = List.of("categories-part-1", "categories-part-2", "categories-part-3",
-                "categories-part-4", "brands", "products","product_attributes");
-        sqlFiles.forEach(this::executeSql);
+        if (isSeeded) {
+            List<String> sqlFiles = List.of("categories-part-1", "categories-part-2", "categories-part-3",
+                    "categories-part-4", "brands", "products","product_attributes");
+            sqlFiles.forEach(this::executeSql);
+        }
     }
 
     private void executeSql(String fileName) {

@@ -21,3 +21,6 @@ spring:
 redis:
   password: redisPassword
   hostname: localhost
+data:
+  seed:
+    enabled: true

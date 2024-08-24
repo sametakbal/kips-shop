@@ -17,7 +17,7 @@ public class ProductAttributeEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "attribute_value")
     private String value;
 
     @ManyToOne
