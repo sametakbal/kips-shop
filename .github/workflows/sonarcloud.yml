@@ -45,7 +45,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }}
-        run: ./gradlew build sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew build sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }} --warning-mode all
 
       - name: Upload SonarCloud results
         uses: SonarSource/sonarcloud-github-action@master
