@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductFilterRequest {
-    private int page = 0;
-    private int size = 10;
+    private int page;
+    private int size;
     private String name;
     private String description;
     private Float rating;
@@ -22,6 +22,6 @@ public class ProductFilterRequest {
     private BigDecimal maxPrice;
     private Long categoryId;
     private Long brandId;
-    private String sortBy= "createdAt";
-    private String sortOrder = "DESC";
+    private String sortBy;
+    private String sortOrder;
 }
