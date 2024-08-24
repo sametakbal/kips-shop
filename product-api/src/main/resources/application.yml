@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: product-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/products_db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+    default-property-inclusion: non_null
+  sql:
+    init:
+      mode: always
+redis:
+  password: redisPassword
+  hostname: localhost
