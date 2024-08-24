@@ -7,6 +7,15 @@ plugins {
 group = 'com.kips'
 version = '0.0.1-SNAPSHOT'
 
+apply plugin: 'org.sonarqube'
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "sametakbal_kips-shop"
+	}
+}
+
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
