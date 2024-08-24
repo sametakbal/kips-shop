@@ -32,7 +32,7 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - 'product-api/**'
+      - 'product-api/src/**'
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
