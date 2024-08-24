@@ -31,8 +31,6 @@ name: SonarCloud analysis
 on:
   push:
     branches: [ "master" ]
-    paths:
-      - 'product-api/src/**'
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
