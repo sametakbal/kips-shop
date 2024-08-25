@@ -48,7 +48,7 @@ jobs:
       - name: Upload SonarCloud results
         uses: SonarSource/sonarcloud-github-action@master
         with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          sonar-token: e4d8adb6d397af356a7a4ac1cc6421877b50c13c
 
       - name: Upload test results
         if: always()
