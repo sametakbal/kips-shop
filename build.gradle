@@ -1,9 +1,9 @@
 plugins {
-    id 'org.sonarqube' version '4.0.0.2929'
+    id 'org.sonar' version '4.0.0.2929'
 }
 
 subprojects {
-    apply plugin: 'org.sonarqube'
+    apply plugin: 'org.sonar'
 
     sonarqube {
         properties {
