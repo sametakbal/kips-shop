@@ -11,11 +11,19 @@ import java.util.List;
 @Entity
 @Table(name = "category")
 @NoArgsConstructor
-@AllArgsConstructor
 public class CategoryEntity extends BaseEntity {
 
     public CategoryEntity(Long id) {
         setId(id);
+    }
+
+    public CategoryEntity(Long id,String name,
+                          CategoryEntity parent,
+                          List<CategoryEntity> children) {
+        setId(id);
+        this.name = name;
+        this.parent = parent;
+        this.children = children;
     }
 
     @Column(nullable = false)
