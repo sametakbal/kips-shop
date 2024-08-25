@@ -41,18 +41,14 @@ jobs:
       - name: Build and analyze project
         working-directory: ${{ matrix.project }}
         env:
-          SONAR_TOKEN: e4d8adb6d397af356a7a4ac1cc6421877b50c13c
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }}
-        run: ./gradlew build sonarqube -Dsonar.login=e4d8adb6d397af356a7a4ac1cc6421877b50c13c --warning-mode all
-
-      - name: Upload SonarCloud results
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          SONAR_TOKEN: e4d8adb6d397af356a7a4ac1cc6421877b50c13c
-          args: >
-            -Dsonar.projectKey=sametakbal_kips-shop
-            -Dsonar.organization=sametakbaldeveloper
-            -Dsonar.host.url=https://sonarcloud.io
+        run: |
+          ./gradlew build sonarqube \
+          -Dsonar.projectKey=sametakbal_kips-shop \
+          -Dsonar.organization=sametakbaldeveloper \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} --warning-mode all
 
       - name: Upload test results
         if: always()
@@ -60,5 +56,3 @@ jobs:
         with:
           name: test-results-${{ matrix.project }}
           path: ${{ matrix.project }}/build/test-results/test
-        env:
-          SONAR_TOKEN: e4d8adb6d397af356a7a4ac1cc6421877b50c13c
