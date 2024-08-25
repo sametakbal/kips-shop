@@ -11,9 +11,13 @@ on:
       - 'release/*'
 
 jobs:
-  build:
-    name: Build
+  sonar:
+    name: SonarCloud Analysis
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - product-api
     services:
       postgres:
         image: postgres
@@ -30,14 +34,6 @@ jobs:
         command: redis-server --requirepass redisPassword
         ports:
           - 6379:6379
-  sonar:
-    name: SonarCloud Analysis
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project:
-          - product-api
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
