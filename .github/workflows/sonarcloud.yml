@@ -41,9 +41,9 @@ jobs:
       - name: Build and analyze project
         working-directory: ${{ matrix.project }}
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: e4d8adb6d397af356a7a4ac1cc6421877b50c13c
           GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }}
-        run: ./gradlew build sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }} --warning-mode all
+        run: ./gradlew build sonarqube -Dsonar.login=e4d8adb6d397af356a7a4ac1cc6421877b50c13c --warning-mode all
 
       - name: Upload SonarCloud results
         uses: SonarSource/sonarcloud-github-action@master
