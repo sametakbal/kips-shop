@@ -1,5 +1,5 @@
 plugins {
-    id 'org.sonar' version '4.0.0.2929'
+    id 'org.sonar' version '4.5'
 }
 
 subprojects {
