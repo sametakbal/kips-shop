@@ -11,10 +11,9 @@ on:
       - 'release/*'
 
 jobs:
-  sonar:
-    name: SonarCloud Analysis
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres
@@ -31,6 +30,9 @@ jobs:
         command: redis-server --requirepass redisPassword
         ports:
           - 6379:6379
+  sonar:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         project:
