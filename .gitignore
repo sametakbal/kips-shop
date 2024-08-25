@@ -83,3 +83,4 @@ yarn-error.log*
 /backend/.mvn/
 /uploads/
 application-local.yml
+/.gradle/
