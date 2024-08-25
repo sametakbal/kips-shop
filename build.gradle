@@ -10,7 +10,6 @@ subprojects {
             property "sonar.projectKey", "sametakbal_kips-shop"
             property "sonar.organization", "sametakbaldeveloper"
             property "sonar.host.url", "https://sonarcloud.io"
-            property "sonar.login", "${{ secrets.SONAR_TOKEN }}"
         }
     }
 }
@@ -19,5 +18,6 @@ sonarqube {
     properties {
         property "sonar.projectName", "product-api"
         property "sonar.projectKey", "sametakbal_kips-shop"
+        property "sonar.login", "${{ secrets.SONAR_TOKEN }}"
     }
 }
