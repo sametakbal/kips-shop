@@ -56,3 +56,11 @@ jobs:
         with:
           name: test-results-${{ matrix.project }}
           path: ${{ matrix.project }}/build/test-results/test
+            - name: SonarCloud Scan
+                uses: SonarSource/sonarcloud-github-action@master
+                with:
+                  args: >
+                    -Dsonar.projectKey=sametakbal_kips-shop
+                    -Dsonar.organization=sametakbaldeveloper
+                env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
