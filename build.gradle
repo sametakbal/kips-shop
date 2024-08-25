@@ -19,6 +19,6 @@ sonarqube {
         property "sonar.projectName", "product-api"
         property "sonar.projectKey", "sametakbal_kips-shop"
         property "sonar.organization", "sametakbaldeveloper"
-        property "sonar.login", "${{ secrets.SONAR_TOKEN }}"
+        property "sonar.login", "e4d8adb6d397af356a7a4ac1cc6421877b50c13c"
     }
 }
