@@ -1,0 +1,3 @@
+rootProject.name = 'kips-shop'
+
+include ':product-api'
