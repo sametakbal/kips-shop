@@ -15,7 +15,7 @@ sonarqube {
 		property "sonar.projectKey", "sametakbal_kips-shop"
 		property "sonar.organization", "sametakbaldeveloper"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.token", ${{ secrets.SONAR_GRADLE_TOKEN }}
+		property "sonar.token", System.getenv("SONAR_TOKEN")
 	}
 }
 
