@@ -48,7 +48,7 @@ jobs:
           -Dsonar.projectKey=sametakbal_kips-shop \
           -Dsonar.organization=sametakbaldeveloper \
           -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }} --warning-mode all
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} --warning-mode all
 
       - name: Upload test results
         if: always()
