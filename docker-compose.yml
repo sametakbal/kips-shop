@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
 
-  postgres:
+  postgres-products:
     image: postgres
     volumes:
-      - ./docs/ddl:/docker-entrypoint-initdb.d
+      - ./docs/ddl/products:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -13,6 +13,18 @@ services:
       LANG: C.UTF-8
     ports:
       - "5432:5432"
+
+  postgres-orders:
+    image: postgres
+    volumes:
+      - ./docs/ddl/orders:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: orders_db
+      LANG: C.UTF-8
+    ports:
+      - "5433:5432"
 
   redis:
     image: "redis:alpine"
