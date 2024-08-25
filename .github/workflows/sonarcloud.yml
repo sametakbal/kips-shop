@@ -15,6 +15,22 @@ jobs:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: products_db
+          LANG: C.UTF-8
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis
+        command: redis-server --requirepass redisPassword
+        ports:
+          - 6379:6379
     strategy:
       matrix:
         project:
