@@ -49,6 +49,10 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         with:
           SONAR_TOKEN: e4d8adb6d397af356a7a4ac1cc6421877b50c13c
+          args: >
+            -Dsonar.projectKey=sametakbal_kips-shop
+            -Dsonar.organization=sametakbaldeveloper
+            -Dsonar.host.url=https://sonarcloud.io
 
       - name: Upload test results
         if: always()
