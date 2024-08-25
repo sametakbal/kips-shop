@@ -1,6 +1,7 @@
 # Kips Shop
 ### Spring Boot E-Commerce Application
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=sametakbal_kips-shop)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sametakbal_kips-shop&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=sametakbal_kips-shop)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=sametakbal_kips-shop&metric=bugs)](https://sonarcloud.io/summary/new_code?id=sametakbal_kips-shop)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sametakbal_kips-shop&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=sametakbal_kips-shop)
