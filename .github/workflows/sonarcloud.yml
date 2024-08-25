@@ -18,6 +18,7 @@ jobs:
       matrix:
         project:
           - product-api
+          - order-api
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
