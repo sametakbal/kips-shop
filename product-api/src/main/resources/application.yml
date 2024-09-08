@@ -1,6 +1,15 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka/
+
 spring:
   application:
     name: product-api
+  config:
+    import: optional:configserver:http://localhost:8888
   datasource:
     url: jdbc:postgresql://localhost:5432/products_db
     username: postgres
@@ -24,3 +33,5 @@ redis:
 data:
   seed:
     enabled: true
+server:
+  port: 8081
