@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,13 +19,17 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductEntity extends BaseEntity {
 
+    public ProductEntity(Long id) {
+        setId(id);
+    }
+
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, length = 2000)
     private String description;
 
-    @Column(nullable = true)
+    @Column
     private Float rating;
 
     @Column(nullable = false)
@@ -50,4 +55,6 @@ public class ProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductAttributeEntity> attributes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProductImage> images = Set.of();
 }

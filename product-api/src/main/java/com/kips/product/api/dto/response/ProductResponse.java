@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Data
 @Builder
@@ -21,4 +22,5 @@ public class ProductResponse {
     private String categoryName;
     private Long brandId;
     private String brandName;
+    private Set<ImageResponse> images;
 }

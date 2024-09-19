@@ -27,6 +27,12 @@ spring:
   sql:
     init:
       mode: always
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 2000KB
+      max-request-size: 2000KB
 redis:
   password: redisPassword
   hostname: localhost
@@ -35,3 +41,12 @@ data:
     enabled: true
 server:
   port: 8081
+
+management:
+  endpoint:
+    health.show-details: always
+    info:
+      enabled: true
+
+file:
+  download-url: http://localhost:${server.port}/api/v1/file/download

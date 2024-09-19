@@ -18,7 +18,8 @@ public class ProductController extends BaseController {
     private final ProductQueryService queryService;
 
     @GetMapping
-    public ResponseEntity<DataResponse<ProductResponse>> getAllProducts(ProductFilterRequest filterRequest, @RequestBody(required = false) AttributeRequest attributes) {
+    public ResponseEntity<DataResponse<ProductResponse>> getAllProducts(ProductFilterRequest filterRequest,
+                                                                        @RequestBody(required = false) AttributeRequest attributes) {
         var productsPage = queryService.getAllProducts(filterRequest, attributes);
         return respond(productsPage.getContent(), productsPage.getTotalElements());
     }

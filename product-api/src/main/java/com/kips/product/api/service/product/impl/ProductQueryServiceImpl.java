@@ -1,6 +1,5 @@
 package com.kips.product.api.service.product.impl;
 
-import com.kips.product.api.common.constants.CacheNames;
 import com.kips.product.api.domain.ProductEntity;
 import com.kips.product.api.dto.request.AttributeRequest;
 import com.kips.product.api.dto.request.ProductFilterRequest;
@@ -12,7 +11,6 @@ import com.kips.product.api.service.product.mapper.ProductMapper;
 import com.kips.product.api.service.product.specs.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -33,7 +31,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     private final ProductMapper productMapper;
 
     @Override
-    @Cacheable(CacheNames.PRODUCTS)
+    //@Cacheable(CacheNames.PRODUCTS)
     public Page<ProductResponse> getAllProducts(ProductFilterRequest filterRequest,
                                                 AttributeRequest attributeRequest) {
         Specification<ProductEntity> spec = Specification.where(ProductSpecification.isActive())
@@ -71,7 +69,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         Sort sort = Sort.by(direction, filterRequest.getSortBy());
         PageRequest pageRequest = PageRequest.of(filterRequest.getPage(), filterRequest.getSize(), sort);
 
-        return productRepository.findAll(spec, pageRequest).map(productMapper::toResponse);
+        return productRepository
+                .findAll(spec, pageRequest)
+                .map(productMapper::toResponse);
     }
 
     @Override

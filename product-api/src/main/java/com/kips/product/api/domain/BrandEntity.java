@@ -16,6 +16,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BrandEntity extends BaseEntity {
+
+    public BrandEntity(Long id) {
+        setId(id);
+    }
+
     @Column(nullable = false)
     private String name;
 }
