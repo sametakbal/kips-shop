@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: kips-be
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kips_db
+    username: kips_admin
+    password: db_password!
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      pool-name: HikariPool
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+    default-property-inclusion: non_null
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: redis_cache
+      port: 6379
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG
