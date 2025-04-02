@@ -40,3 +40,14 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "sametakbal_kips-shop"
+		property "sonar.organization", "sametakbaldeveloper"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.login", System.getenv("SONAR_TOKEN")
+
+		property "sonar.exclusions", "**/db/migration/**/*.sql"
+	}
+}
