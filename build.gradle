@@ -51,6 +51,6 @@ sonarqube {
 
 		property "sonar.sources", "src/main/java"
 		property "sonar.tests", "src/test/java"
-		property "sonar.exclusions", "**/db/migration/**/*.sql"
+		property "sonar.inclusions", "**/*.java"
 	}
 }
