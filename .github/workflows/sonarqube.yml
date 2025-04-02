@@ -2,6 +2,8 @@ name: SonarQube Analysis
 
 on:
   push:
+    paths-ignore:
+      - '**/migration/**'
     branches:
       - main
   pull_request:
