@@ -1,33 +1,33 @@
 version: '3.8'
 
 services:
-
-  postgres-products:
-    image: postgres
-    volumes:
-      - ./docs/ddl/products:/docker-entrypoint-initdb.d
+  postgres:
+    image: postgres:15
+    container_name: kips_postgres_db
+    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: products_db
-      LANG: C.UTF-8
+      POSTGRES_USER: kips_admin
+      POSTGRES_PASSWORD: db_password!
+      POSTGRES_DB: kips_db
     ports:
       - "5432:5432"
-
-  postgres-orders:
-    image: postgres
     volumes:
-      - ./docs/ddl/orders:/docker-entrypoint-initdb.d
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: orders_db
-      LANG: C.UTF-8
-    ports:
-      - "5433:5432"
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend_network
 
   redis:
-    image: "redis:alpine"
-    command: redis-server --requirepass redisPassword
+    image: redis:7
+    container_name: redis_cache
+    restart: always
     ports:
       - "6379:6379"
+    networks:
+      - backend_network
+
+volumes:
+  postgres_data:
+
+networks:
+  backend_network:
+    driver: bridge
