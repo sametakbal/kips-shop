@@ -12,4 +12,12 @@ public class BaseController {
                 .status(HttpStatus.OK)
                 .build();
     }
+
+    public ApiResponse<Void> error(String message) {
+        return ApiResponse.<Void>builder()
+                .success(false)
+                .message(message)
+                .status(HttpStatus.BAD_REQUEST)
+                .build();
+    }
 }
