@@ -1,6 +1,7 @@
-package com.akbal.kips.be.domain;
+package com.akbal.kips.be.domain.product;
 
 
+import com.akbal.kips.be.domain.common.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,15 +22,15 @@ import java.util.List;
 @Entity
 @Table(name = "category")
 @NoArgsConstructor
-public class CategoryEntity extends BaseEntity {
+public class ProductCategory extends BaseEntity {
 
-    public CategoryEntity(Long id) {
+    public ProductCategory(Long id) {
         setId(id);
     }
 
-    public CategoryEntity(Long id, String name,
-                          CategoryEntity parent,
-                          List<CategoryEntity> children) {
+    public ProductCategory(Long id, String name,
+                           ProductCategory parent,
+                           List<ProductCategory> children) {
         setId(id);
         this.name = name;
         this.parent = parent;
@@ -41,9 +42,9 @@ public class CategoryEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private CategoryEntity parent;
+    private ProductCategory parent;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CategoryEntity> children = new ArrayList<>();
+    private List<ProductCategory> children = new ArrayList<>();
 
 }

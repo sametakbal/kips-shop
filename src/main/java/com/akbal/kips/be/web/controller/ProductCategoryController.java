@@ -1,10 +1,10 @@
-package com.akbal.kips.be.controller;
+package com.akbal.kips.be.web.controller;
 
 
-import com.akbal.kips.be.dto.request.CategoryCreateRequest;
-import com.akbal.kips.be.dto.response.ApiResponse;
-import com.akbal.kips.be.dto.response.CategoryResponse;
-import com.akbal.kips.be.service.category.CategoryQueryService;
+import com.akbal.kips.be.dto.product.request.CategoryCreateRequest;
+import com.akbal.kips.be.dto.product.response.ApiResponse;
+import com.akbal.kips.be.dto.product.response.CategoryResponse;
+import com.akbal.kips.be.service.product.ProductCategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +20,13 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/categories")
-public class CategoryController extends BaseController {
+@RequestMapping("/api/v1/product-categories")
+public class ProductCategoryController extends BaseController {
 
-    private final CategoryQueryService service;
+    private final ProductCategoryService service;
 
 
-    @GetMapping("/all")
+    @GetMapping
     public ApiResponse<List<CategoryResponse>> getAllCategories() {
         var categories = service.getAllCategories();
         return respond(categories);

@@ -1,4 +1,4 @@
-package com.akbal.kips.be.dto.request;
+package com.akbal.kips.be.dto.product.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

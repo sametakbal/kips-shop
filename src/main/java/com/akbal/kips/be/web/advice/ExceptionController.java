@@ -1,6 +1,7 @@
-package com.akbal.kips.be.controller;
+package com.akbal.kips.be.web.advice;
 
-import com.akbal.kips.be.dto.response.ApiResponse;
+import com.akbal.kips.be.dto.product.response.ApiResponse;
+import com.akbal.kips.be.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;

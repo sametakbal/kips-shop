@@ -1,15 +1,15 @@
-package com.akbal.kips.be.service.category.mapper;
+package com.akbal.kips.be.service.product.mapper;
 
-import com.akbal.kips.be.domain.CategoryEntity;
-import com.akbal.kips.be.dto.response.CategoryResponse;
+import com.akbal.kips.be.domain.product.ProductCategory;
+import com.akbal.kips.be.dto.product.response.CategoryResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CategoryMapper {
+public class ProductCategoryMapper {
 
-    public CategoryResponse toResponse(CategoryEntity entity, boolean includeChildren) {
+    public CategoryResponse toResponse(ProductCategory entity, boolean includeChildren) {
         var response = CategoryResponse.builder()
                 .id(entity.getId()).name(entity.getName()).build();
 
@@ -21,7 +21,7 @@ public class CategoryMapper {
         return response;
     }
 
-    public List<CategoryResponse> toResponse(List<CategoryEntity> entities, boolean includeChildren) {
+    public List<CategoryResponse> toResponse(List<ProductCategory> entities, boolean includeChildren) {
         return entities.stream()
                 .map(entity -> toResponse(entity, includeChildren))
                 .toList();

@@ -1,4 +1,4 @@
-package com.akbal.kips.be.dto.response;
+package com.akbal.kips.be.dto.product.response;
 
 import lombok.Builder;
 import lombok.Data;

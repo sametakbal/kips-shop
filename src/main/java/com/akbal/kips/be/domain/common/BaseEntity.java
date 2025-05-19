@@ -1,4 +1,4 @@
-package com.akbal.kips.be.domain;
+package com.akbal.kips.be.domain.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

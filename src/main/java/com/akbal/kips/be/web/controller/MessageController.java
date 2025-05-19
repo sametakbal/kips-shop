@@ -1,4 +1,4 @@
-package com.akbal.kips.be.controller;
+package com.akbal.kips.be.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;

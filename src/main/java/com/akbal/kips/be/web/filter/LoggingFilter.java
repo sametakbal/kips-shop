@@ -1,4 +1,4 @@
-package com.akbal.kips.be.filter;
+package com.akbal.kips.be.web.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

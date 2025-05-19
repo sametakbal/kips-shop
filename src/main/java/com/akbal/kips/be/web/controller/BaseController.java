@@ -1,6 +1,6 @@
-package com.akbal.kips.be.controller;
+package com.akbal.kips.be.web.controller;
 
-import com.akbal.kips.be.dto.response.ApiResponse;
+import com.akbal.kips.be.dto.product.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 
 public class BaseController {
