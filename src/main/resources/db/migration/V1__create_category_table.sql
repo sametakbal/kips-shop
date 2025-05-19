@@ -1,4 +1,4 @@
-CREATE TABLE category
+CREATE TABLE product_category
 (
     id         BIGSERIAL PRIMARY KEY,
     name       VARCHAR(255) NOT NULL,
@@ -7,8 +7,8 @@ CREATE TABLE category
     created_at TIMESTAMP    NOT NULL,
     updated_at TIMESTAMP,
 
-    CONSTRAINT fk_category_parent
+    CONSTRAINT fk_product_category_parent
         FOREIGN KEY (parent_id)
-            REFERENCES category (id)
+            REFERENCES product_category (id)
             ON DELETE CASCADE
 );

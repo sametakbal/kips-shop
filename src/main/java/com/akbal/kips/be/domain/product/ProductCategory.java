@@ -20,7 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "category")
+@Table(name = "product_category")
 @NoArgsConstructor
 public class ProductCategory extends BaseEntity {
 
